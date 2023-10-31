@@ -5,7 +5,7 @@ using namespace std;
 
 // static unsigned long numberOfRecurrciveCall=0;
 
-BatchPivotsMCE::BatchPivotsMCE(string const &fileName){
+RMCEdegen::RMCEdegen(string const &fileName){
     ifstream instream(fileName.c_str());
     if (instream.good() && !instream.eof())
         instream >> n;
@@ -82,7 +82,7 @@ BatchPivotsMCE::BatchPivotsMCE(string const &fileName){
     }
 }
 
-BatchPivotsMCE::~BatchPivotsMCE() {
+RMCEdegen::~RMCEdegen() {
     free(inds);
     free(seps);
     free(seps2);
@@ -102,7 +102,7 @@ BatchPivotsMCE::~BatchPivotsMCE() {
     free(numNeighbors);
 }
 
-void BatchPivotsMCE::computeDegeneracyOrder(){
+void RMCEdegen::computeDegeneracyOrder(){
     vector<list<int>> verticesByDegree(n);
     vector<list<int>::iterator> vertexLocator(n);
     vector<int> degree(n);
@@ -162,7 +162,7 @@ void BatchPivotsMCE::computeDegeneracyOrder(){
     }
 }
 
-long BatchPivotsMCE::computeDegeneracyWithGlobalReduction(int* offset){
+long RMCEdegen::computeDegeneracyWithGlobalReduction(int* offset){
     long currentCliques = 0;
     vector<list<int>> verticesByDegree(n);
     vector<list<int>::iterator> vertexLocator(n);
@@ -435,7 +435,7 @@ long BatchPivotsMCE::computeDegeneracyWithGlobalReduction(int* offset){
     return currentCliques;
 }
 
-void BatchPivotsMCE::setCandidates(int** candidates, int* numCandidates,
+void RMCEdegen::setCandidates(int** candidates, int* numCandidates,
                                    int posX, int posP, int posR, int pivot,
                                    long* cliqueCount){
     *candidates = (int*)malloc((posR-posP)*sizeof(int));
@@ -480,7 +480,7 @@ void BatchPivotsMCE::setCandidates(int** candidates, int* numCandidates,
     (*numCandidates)++;
 }
 
-void BatchPivotsMCE::P2RandFindPivot(int vertex, 
+void RMCEdegen::P2RandFindPivot(int vertex, 
                                      int* posX, int* posP, int* posR, 
                                      int* newPosX, int* newPosP, int* newPosR,
                                     int* pivot, long* cliqueCount){
@@ -793,7 +793,7 @@ void BatchPivotsMCE::P2RandFindPivot(int vertex,
     }
 }
 
-void BatchPivotsMCE::R2X(int vertex, 
+void RMCEdegen::R2X(int vertex, 
                          int* posX, int* posP, int* posR){
     int vPos = vertexPos[vertex];
     vertexArray[vPos] = vertexArray[*posP];
@@ -804,7 +804,7 @@ void BatchPivotsMCE::R2X(int vertex,
     *posR = *posR + 1;
 }
 
-long BatchPivotsMCE::run(){
+long RMCEdegen::run(){
     
     clock_t start, mid, end;
     long cliqueCount = 0;
@@ -1133,7 +1133,7 @@ long BatchPivotsMCE::run(){
     return cliqueCount;
 }
 
-void BatchPivotsMCE::bpRecur(long* cliqueCount,
+void RMCEdegen::bpRecur(long* cliqueCount,
                              list<int> &partialClique, 
                              int posX, int posP, int posR, int pivot){
     // numberOfRecurrciveCall++;
@@ -1205,6 +1205,6 @@ void BatchPivotsMCE::bpRecur(long* cliqueCount,
 
 int main(int argc, char** argv) {
     string const filename = argv[1];
-    BatchPivotsMCE alg(filename);
+    RMCEdegen alg(filename);
     alg.run();
 }

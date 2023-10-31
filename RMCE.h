@@ -17,11 +17,11 @@
 
 using namespace std;
 
-class BatchPivotsMCE
+class RMCEdegen
 {
 public:
-    BatchPivotsMCE(string const &fileName);
-    ~BatchPivotsMCE();
+    RMCEdegen(string const &fileName);
+    ~RMCEdegen();
 
     void computeDegeneracyOrder();
     long computeDegeneracyWithGlobalReduction(int *offset);
